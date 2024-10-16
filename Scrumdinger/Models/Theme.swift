@@ -1,6 +1,6 @@
 import SwiftUI
 
-enum Theme: String {
+enum Theme: String { // Theme으로 묶으려고 그룹핑하고 스펠링 오타나지 않도록 Theme.navy 이런식으로 할 수 있도록 도와준다.
     case bubblegum
     case buttercup
     case indigo
@@ -18,7 +18,7 @@ enum Theme: String {
     case teal
     case yellow
     
-    var accentColor: Color {
+    var accentColor: Color { // 글씨체 색상
         switch self {
         case .bubblegum, .buttercup, .lavender, .orange, .periwinkle, .poppy, .seafoam, .sky, .tan, .teal, .yellow: return .black
         case .indigo, .magenta, .navy, .oxblood, .purple: return .white
@@ -28,8 +28,8 @@ enum Theme: String {
         Color(rawValue)
     }
     
-    var name: String {
-            rawValue.capitalized
+    var name: String { // 첫글자 대문자 만들기
+            rawValue.capitalized // enum사용하다가 Apple 이런식으로 꺼내고 싶을 때.
         }
     
 }

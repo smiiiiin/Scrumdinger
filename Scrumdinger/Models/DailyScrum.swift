@@ -1,12 +1,12 @@
 import Foundation
 
-struct DailyScrum: Identifiable {
+struct DailyScrum: Identifiable { // list를 사용하려면 id를 수동으로 id: \.id 설정해줘야 한다
     let id: UUID
     var title: String
     var attendees: [Attendee]
     var lengthInMinutes: Int
     var lengthInMinutesAsDouble: Double {
-        get {
+        get { //return느낌
             Double(lengthInMinutes)
         }
         set {
@@ -26,7 +26,7 @@ struct DailyScrum: Identifiable {
 
 
 extension DailyScrum {
-    struct Attendee: Identifiable {
+    struct Attendee: Identifiable { // struct NODE 이런 느낌.
         let id: UUID
         var name: String
         
