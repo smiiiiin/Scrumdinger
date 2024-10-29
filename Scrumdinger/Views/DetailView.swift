@@ -60,7 +60,7 @@ struct DetailView: View {
                                 ToolbarItem(placement: .confirmationAction) {
                                     Button("Done") {
                                         isPresentingEditView = false
-                                        scrum = editingScrum
+                                        scrum = editingScrum //정보 update swap개념으로 이해할 수 있다
                                     }
                                 }
                             }

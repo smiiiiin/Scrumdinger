@@ -4,7 +4,7 @@ struct DetailEditView: View {
     @Binding var scrum: DailyScrum
     @State private var newAttendeeName = ""
     var body: some View {
-        Form {
+        Form { // slider나 themepicker때문에 form사용해야한다
             Section(header: Text("Meeting Info")) {
                 TextField("Title", text: $scrum.title)
                 HStack {
