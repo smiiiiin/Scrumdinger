@@ -2,20 +2,21 @@ import SwiftUI
 
 struct CardView: View {
     let scrum: DailyScrum
-
+    
     var body: some View {
         VStack(alignment: .leading) {
-            Text(scrum.title)
-                .font(.headline)
-                .accessibilityAddTraits(.isHeader)
-            Spacer()
+            Button(action: {}){
+                Text(scrum.title)
+                    .font(.headline)
+                .accessibilityAddTraits(.isButton)}
+            Spacer() // 안쓰는 공간만큼 여백을 만든다
             HStack {
                 Label("\(scrum.attendees.count)", systemImage: "person.3")
                     .accessibilityLabel("\(scrum.attendees.count) attendees")
                 Spacer()
                 Label("\(scrum.lengthInMinutes)", systemImage: "clock")
                     .accessibilityLabel("\(scrum.lengthInMinutes) minute meeting")
-                    .labelStyle(.automatic) //.trailingIcon !
+                    .labelStyle(.trailingIcon)   // 아이콘과 숫자의 위치를 바꾸고 싶어서.
             }
             .font(.caption)
         }

@@ -1,12 +1,12 @@
 import Foundation
 
-struct DailyScrum: Identifiable { // list를 사용하려면 id를 수동으로 id: \.id 설정해줘야 한다
+struct DailyScrum: Identifiable { //제목,참가자이름리스트, 시간, 테마색상, 히스토리
     let id: UUID
     var title: String
     var attendees: [Attendee]
     var lengthInMinutes: Int
     var lengthInMinutesAsDouble: Double {
-        get { //return느낌
+        get {
             Double(lengthInMinutes)
         }
         set {
@@ -14,7 +14,9 @@ struct DailyScrum: Identifiable { // list를 사용하려면 id를 수동으로 
         }
     }
     var theme: Theme
+    var history: [History] = []
     
+    // UUID()는 순서대로 새로운 ID자동으로 만들어준다 회원가입 시, 98번째회원 이렇게
     init(id: UUID = UUID(), title: String, attendees: [String], lengthInMinutes: Int, theme: Theme) {
         self.id = id
         self.title = title
@@ -24,9 +26,8 @@ struct DailyScrum: Identifiable { // list를 사용하려면 id를 수동으로 
     }
 }
 
-
 extension DailyScrum {
-    struct Attendee: Identifiable { // struct NODE 이런 느낌.
+    struct Attendee: Identifiable {
         let id: UUID
         var name: String
         
@@ -35,12 +36,10 @@ extension DailyScrum {
             self.name = name
         }
     }
-    
     static var emptyScrum: DailyScrum {
         DailyScrum(title: "", attendees: [], lengthInMinutes: 5, theme: .sky)
     }
 }
-
 
 extension DailyScrum {
     static let sampleData: [DailyScrum] =
