@@ -74,10 +74,10 @@
 				2119C8CB2CB2B9200047B552 /* DetailEditView.swift */,
 				2136C33C2CC01A9E00B333CC /* ThemePicker.swift */,
 				2136C33A2CC0191D00B333CC /* ThemeView.swift */,
-				2136C33E2CC3ABF900B333CC /* MeetingHeaderView.swift */,
 				21B1D0782CABB43A002546BF /* MeetingView.swift */,
-				2136C3402CC3ADA900B333CC /* MeetingFooterView.swift */,
+				2136C33E2CC3ABF900B333CC /* MeetingHeaderView.swift */,
 				2136C3482CC3C91100B333CC /* ScrumProgressViewStyle.swift */,
+				2136C3402CC3ADA900B333CC /* MeetingFooterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

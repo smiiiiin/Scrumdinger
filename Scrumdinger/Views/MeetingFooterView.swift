@@ -5,10 +5,12 @@ struct MeetingFooterView: View {
     var skipAction: ()->Void
     
     private var speakerNumber: Int? {
+        // guard는 return처럼 조건부합하면 나오게 한다.
+        // firstIndex는 조건에 해당하는 첫번째 인덱스를 반환하는 함수, where= if느낌, $0은 현재요소를 의미한다.
         guard let index = speakers.firstIndex(where: { !$0.isCompleted }) else { return nil }
         return index + 1
     }
-    private var isLastSpeaker: Bool {
+    private var isLastSpeaker: Bool { // 중요> 마지막페이지에는 버튼이 사라져야 하니깐 .allSatisfy:모두만족시, return 1
         return speakers.dropLast().allSatisfy { $0.isCompleted }
     }
     private var speakerText: String {
@@ -30,7 +32,7 @@ struct MeetingFooterView: View {
                     }
                 }
             }
-            .padding([.bottom, .horizontal])
+            .padding([.bottom, .horizontal]) // 패딩 여러개 하고싶어서.
         }
     }
 

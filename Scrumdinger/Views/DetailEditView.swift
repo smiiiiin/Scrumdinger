@@ -4,17 +4,17 @@ struct DetailEditView: View {
     @Binding var scrum: DailyScrum
     @State private var newAttendeeName = ""
     var body: some View {
-        Form { // slider나 themepicker때문에 form사용해야한다
+        Form { // slider나 themepicker때문에 form사용해야함.
             Section(header: Text("Meeting Info")) {
                 TextField("Title", text: $scrum.title)
                 HStack {
                     Slider(value: $scrum.lengthInMinutesAsDouble, in: 5...30, step: 5) {
-                        Text("Length")
+                        Text("Length") // voiceOver에서 접근성을 위한 라벨링
                     }
-                    .accessibilityValue("\(scrum.lengthInMinutes) minutes")
+                    .accessibilityValue("\(scrum.lengthInMinutes) minutes") // 보이스오버: 클릭하면 읽어준다
                     Spacer()
                     Text("\(scrum.lengthInMinutes) minutes")
-                        .accessibilityHidden(true)
+                        .accessibilityHidden(true)// 읽어주거나 보여주거나 둘중에 하나만 하는 기능
                 }
                 ThemePicker(selection: $scrum.theme)
             }
@@ -23,7 +23,7 @@ struct DetailEditView: View {
                 ForEach(scrum.attendees) { attendee in
                     Text(attendee.name)
                 }
-                .onDelete { indices in
+                .onDelete { indices in //보라색 내장함수, indices는 리스트에서 선택된 인덱스위치를 제공한다
                     scrum.attendees.remove(atOffsets: indices)
                 }
                 HStack {
@@ -32,13 +32,13 @@ struct DetailEditView: View {
                         withAnimation {
                             let attendee = DailyScrum.Attendee(name: newAttendeeName)
                             scrum.attendees.append(attendee)
-                            newAttendeeName = ""
+                            newAttendeeName = "" // 다시 빈칸 , 그래야 여러번 추가 가능
                         }
                     }) {
                         Image(systemName: "plus.circle.fill")
                             .accessibilityLabel("Add attendee")
                     }
-                    .disabled(newAttendeeName.isEmpty)
+                    .disabled(newAttendeeName.isEmpty)// 비어있으면 추가버튼 안눌림
                 }
             }
         }
