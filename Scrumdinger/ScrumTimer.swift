@@ -1,5 +1,5 @@
 import Foundation
-
+// 여기 뽀개기 
 @MainActor
 final class ScrumTimer: ObservableObject { //final=최종 이라서 수정x
     struct Speaker: Identifiable {

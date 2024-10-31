@@ -5,7 +5,7 @@ struct MeetingFooterView: View {
     var skipAction: ()->Void
     
     private var speakerNumber: Int? {
-        // guard는 return처럼 조건부합하면 나오게 한다.
+        // guard는 else랑짝인데 조건이 맞아서 else오기 전까진 반복되다가 else에 해당하면 끝남.
         // firstIndex는 조건에 해당하는 첫번째 인덱스를 반환하는 함수, where= if느낌, $0은 현재요소를 의미한다.
         guard let index = speakers.firstIndex(where: { !$0.isCompleted }) else { return nil }
         return index + 1

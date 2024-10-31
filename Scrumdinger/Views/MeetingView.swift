@@ -1,10 +1,8 @@
 import SwiftUI
 import AVFoundation
 
-// AVPlayer 확장
 extension AVPlayer {
     static var sharedDingPlayer: AVPlayer = {
-        // 여기에 사용할 사운드 파일의 URL을 넣어주세요.
         guard let url = Bundle.main.url(forResource: "ding", withExtension: "mp3") else {
             fatalError("can't find music file")
         }
@@ -14,6 +12,7 @@ extension AVPlayer {
 
 struct MeetingView: View {
     @Binding var scrum: DailyScrum
+    // 타이머 객체는 초기화를 한번만 한다
     @StateObject var scrumTimer = ScrumTimer()
     
     private var player: AVPlayer { AVPlayer.sharedDingPlayer }
