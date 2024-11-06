@@ -1,12 +1,8 @@
-/*
- See LICENSE folder for this sample’s licensing information.
- */
-
 import SwiftUI
 
 struct ErrorView: View {
     let errorWrapper: ErrorWrapper
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss // 화면을 닫는다. 
     
     var body: some View {
         NavigationStack {
