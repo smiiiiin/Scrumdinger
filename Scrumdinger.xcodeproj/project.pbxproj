@@ -87,14 +87,14 @@
 		A9789BAC2947DE3900305A2F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AA7F3038294A878E005E1E9F /* AVPlayer+Ding.swift */,
 				A93E3F4A294D224A00B9708D /* SpeechRecognizer.swift */,
-				A93E3F42294D18F700B9708D /* ErrorWrapper.swift */,
-				A93E3F40294A912B00B9708D /* History.swift */,
 				C768FBAE294B7F8300798D32 /* ScrumStore.swift */,
 				A93E3F3A294A6F4200B9708D /* ScrumTimer.swift */,
+				AA7F3038294A878E005E1E9F /* AVPlayer+Ding.swift */,
 				A9789BAF2947DF6300305A2F /* DailyScrum.swift */,
 				A9789BAD2947DE5100305A2F /* Theme.swift */,
+				A93E3F40294A912B00B9708D /* History.swift */,
+				A93E3F42294D18F700B9708D /* ErrorWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -102,22 +102,22 @@
 		A9789BB32947E4F500305A2F /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A9789BB12947E08F00305A2F /* CardView.swift */,
-				C76970A529491AB2002748F5 /* DetailEditView.swift */,
-				C76970A12948F9CA002748F5 /* DetailView.swift */,
-				A93E3F44294D196600B9708D /* ErrorView.swift */,
 				A93E3F4C294D28C400B9708D /* HistoryView.swift */,
-				A93E3F3E294A748B00B9708D /* MeetingFooterView.swift */,
-				A93E3F3C294A715B00B9708D /* MeetingHeaderView.swift */,
 				A93E3F46294D1E5600B9708D /* MeetingTimerView.swift */,
 				AAAE8021294793AB0099DABC /* MeetingView.swift */,
 				AAA368B629957D1A00FE35E9 /* NewScrumSheet.swift */,
 				A93E3F38294A6F3400B9708D /* ScrumProgressViewStyle.swift */,
-				C769709F2948F3A4002748F5 /* ScrumsView.swift */,
 				A93E3F48294D1F8500B9708D /* SpeakerArc.swift */,
+				A9789BB12947E08F00305A2F /* CardView.swift */,
+				C76970A529491AB2002748F5 /* DetailEditView.swift */,
+				C76970A12948F9CA002748F5 /* DetailView.swift */,
+				A93E3F3E294A748B00B9708D /* MeetingFooterView.swift */,
+				A93E3F3C294A715B00B9708D /* MeetingHeaderView.swift */,
+				C769709F2948F3A4002748F5 /* ScrumsView.swift */,
 				A9789BB42947E51500305A2F /* TrailingIconLabelStyle.swift */,
 				C76970A929493621002748F5 /* ThemePicker.swift */,
 				C76970A729493341002748F5 /* ThemeView.swift */,
+				A93E3F44294D196600B9708D /* ErrorView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

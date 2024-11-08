@@ -1,14 +1,11 @@
-/*
- See LICENSE folder for this sample’s licensing information.
- */
-
 import Foundation
 import AVFoundation
-import Speech
+import Speech // SFSpeechRecognizer 프레임워크
 import SwiftUI
 
 /// A helper for transcribing speech to text using SFSpeechRecognizer and AVAudioEngine.
-actor SpeechRecognizer: ObservableObject {
+actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기화문제가 발생하지 않는다.
+    //ObservableObject : ui와 객체의 연결. 객체를 볼 수 있다?
     enum RecognizerError: Error {
         case nilRecognizer
         case notAuthorizedToRecognize
@@ -16,31 +13,28 @@ actor SpeechRecognizer: ObservableObject {
         case recognizerIsUnavailable
         
         var message: String {
-            switch self {
-            case .nilRecognizer: return "Can't initialize speech recognizer"
-            case .notAuthorizedToRecognize: return "Not authorized to recognize speech"
-            case .notPermittedToRecord: return "Not permitted to record audio"
-            case .recognizerIsUnavailable: return "Recognizer is unavailable"
+            switch self { //현재 상태를 확인
+            case .nilRecognizer: return "Can't initialize speech recognizer" // 소리파일 없음
+            case .notAuthorizedToRecognize: return "Not authorized to recognize speech" // 권한 없음
+            case .notPermittedToRecord: return "Not permitted to record audio" // 녹음할 수 없음
+            case .recognizerIsUnavailable: return "Recognizer is unavailable" // 애플음성엔진이용불가능
             }
         }
     }
     
-    @MainActor var transcript: String = ""
+    @MainActor var transcript: String = "" // @MainActor = 메인 스레드에서 작동.
     
-    private var audioEngine: AVAudioEngine?
-    private var request: SFSpeechAudioBufferRecognitionRequest?
-    private var task: SFSpeechRecognitionTask?
-    private let recognizer: SFSpeechRecognizer?
+    private var audioEngine: AVAudioEngine? //input
+    private var request: SFSpeechAudioBufferRecognitionRequest? // 버퍼를 받아서 애플음성인식엔진에 보냄!
+    private let recognizer: SFSpeechRecognizer? // 애플음성엔진 like Chapgpt:그래서 얜 let이다. 변할 필요가 없어.
+    private var task: SFSpeechRecognitionTask? // 상태관리 작업관리자
     
-    /**
-     Initializes a new speech recognizer. If this is the first time you've used the class, it
-     requests access to the speech recognizer and the microphone.
-     */
+    
     init() {
         recognizer = SFSpeechRecognizer()
         guard recognizer != nil else {
-            transcribe(RecognizerError.nilRecognizer)
-            return
+            transcribe(RecognizerError.nilRecognizer) //
+            return //아무것도 return 안해?
         }
         
         Task {
@@ -58,8 +52,9 @@ actor SpeechRecognizer: ObservableObject {
     }
     
     @MainActor func startTranscribing() {
-        Task {
-            await transcribe()
+        // 01. 근데 왜 이 앱에서 소리입력만 우선순위를 중시하는걸까?
+        Task { //우선순위 명시되지 않으면 auto모드
+            await transcribe() // 비동기화여서 동시에 다른작업을 할 수 있다. 동기화문제(하나의 작업을 하는 동안 화면전환이 불가능함)
         }
     }
     
@@ -74,16 +69,10 @@ actor SpeechRecognizer: ObservableObject {
             await reset()
         }
     }
-    
-    /**
-     Begin transcribing audio.
-     
-     Creates a `SFSpeechRecognitionTask` that transcribes speech to text until you call `stopTranscribing()`.
-     The resulting transcription is continuously written to the published `transcript` property.
-     */
+    //
     private func transcribe() {
         guard let recognizer, recognizer.isAvailable else {
-            self.transcribe(RecognizerError.recognizerIsUnavailable)
+            self.transcribe(RecognizerError.recognizerIsUnavailable) //자기복제야?
             return
         }
         
@@ -101,12 +90,12 @@ actor SpeechRecognizer: ObservableObject {
     }
     
     /// Reset the speech recognizer.
-    private func reset() {
-        task?.cancel()
-        audioEngine?.stop()
-        audioEngine = nil
-        request = nil
-        task = nil
+    private func reset() { //왜 private인지
+        task?.cancel() // 뭘 취소
+        audioEngine?.stop() // input.을 멈춰
+        audioEngine = nil //input을 nil로 초기화
+        request = nil //이거 뭐야
+        task = nil //이거뭐야 왜 nil로 초기화
     }
     
     private static func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {

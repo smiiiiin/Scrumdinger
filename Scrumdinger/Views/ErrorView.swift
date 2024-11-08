@@ -1,8 +1,9 @@
 import SwiftUI
-
+// 에러뷰는 잘 안뜨니깐 나중에 하자.
 struct ErrorView: View {
     let errorWrapper: ErrorWrapper
-    @Environment(\.dismiss) private var dismiss // 화면을 닫는다. 
+    @Environment(\.dismiss) private var dismiss // 화면을 닫는다.
+    //
     
     var body: some View {
         NavigationStack {
