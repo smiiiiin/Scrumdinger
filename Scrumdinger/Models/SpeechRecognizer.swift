@@ -23,7 +23,7 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
     }
     
     @MainActor var transcript: String = "" // @MainActor = 메인 스레드에서 작동.
-    
+    // 스피치리코그나이저(=애플음성인식엔진)페이지에서 가장 중요한 것.
     private var audioEngine: AVAudioEngine? //input
     private var request: SFSpeechAudioBufferRecognitionRequest? // 버퍼를 받아서 애플음성인식엔진에 보냄!
     private let recognizer: SFSpeechRecognizer? // 애플음성엔진 like Chapgpt:그래서 얜 let이다. 변할 필요가 없어.
@@ -33,12 +33,13 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
     init() {
         recognizer = SFSpeechRecognizer()
         guard recognizer != nil else {
-            transcribe(RecognizerError.nilRecognizer) //
-            return //아무것도 return 안해?
+            transcribe(RecognizerError.nilRecognizer)
+            return
         }
         
         Task {
             do {
+                //조건이 해당되길 보장(바라면서)하면서 조건불만족시, else구문 돌려돌려돌림판~
                 guard await SFSpeechRecognizer.hasAuthorizationToRecognize() else {
                     throw RecognizerError.notAuthorizedToRecognize
                 }
@@ -52,7 +53,7 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
     }
     
     @MainActor func startTranscribing() {
-        // 01. 근데 왜 이 앱에서 소리입력만 우선순위를 중시하는걸까?
+        // ?. 근데 왜 이 앱에서 소리입력만 우선순위를 중시하는걸까?
         Task { //우선순위 명시되지 않으면 auto모드
             await transcribe() // 비동기화여서 동시에 다른작업을 할 수 있다. 동기화문제(하나의 작업을 하는 동안 화면전환이 불가능함)
         }
@@ -69,19 +70,20 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
             await reset()
         }
     }
-    //
+    
+    //? 이거 그냥 존나 어렵다.
     private func transcribe() {
         guard let recognizer, recognizer.isAvailable else {
-            self.transcribe(RecognizerError.recognizerIsUnavailable) //자기복제야?
+            self.transcribe(RecognizerError.recognizerIsUnavailable)
             return
         }
         
         do {
-            let (audioEngine, request) = try Self.prepareEngine()
-            self.audioEngine = audioEngine
-            self.request = request
+            let (audioEngine, request) = try Self.prepareEngine() //input관리
+            self.audioEngine = audioEngine //apple검색엔진
+            self.request = request // 데이터버퍼 엔진에 요청
             self.task = recognizer.recognitionTask(with: request, resultHandler: { [weak self] result, error in
-                self?.recognitionHandler(audioEngine: audioEngine, result: result, error: error)
+                self?.recognitionHandler(audioEngine: audioEngine, result: result, error: error) //관리자
             })
         } catch {
             self.reset()
@@ -90,12 +92,12 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
     }
     
     /// Reset the speech recognizer.
-    private func reset() { //왜 private인지
-        task?.cancel() // 뭘 취소
+    private func reset() { // apple검색엔진인 recognizer빼고 다 nil처리
+        task?.cancel() // 상태관리자.취소 + 객체의 작업을 중지 메모리는 해제 하지 않는다
         audioEngine?.stop() // input.을 멈춰
         audioEngine = nil //input을 nil로 초기화
-        request = nil //이거 뭐야
-        task = nil //이거뭐야 왜 nil로 초기화
+        request = nil // 검색엔진으로 데이터버퍼보내는 것 비우기
+        task = nil // 상태관리자 비우기 + 객체 메모리까지 해제(=nil)
     }
     
     private static func prepareEngine() throws -> (AVAudioEngine, SFSpeechAudioBufferRecognitionRequest) {
@@ -133,7 +135,7 @@ actor SpeechRecognizer: ObservableObject { //왜 actor: 직렬화해서 동기�
         }
     }
     
-    
+    // 여기부터 잠시 넘기자. 어렵다
     nonisolated private func transcribe(_ message: String) {
         Task { @MainActor in
             transcript = message

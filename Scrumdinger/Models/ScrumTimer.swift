@@ -40,14 +40,7 @@ final class ScrumTimer: ObservableObject {
     }
     private var startDate: Date?
     
-    /**
-     Initialize a new timer. Initializing a time with no arguments creates a ScrumTimer with no attendees and zero length.
-     Use `startScrum()` to start the timer.
-     
-     - Parameters:
-        - lengthInMinutes: The meeting length.
-        -  attendees: A list of attendees for the meeting.
-     */
+    //
     init(lengthInMinutes: Int = 0, attendees: [DailyScrum.Attendee] = []) {
         self.lengthInMinutes = lengthInMinutes
         self.speakers = attendees.speakers
@@ -112,13 +105,7 @@ final class ScrumTimer: ObservableObject {
         }
     }
     
-    /**
-     Reset the timer with a new meeting length and new attendees.
-     
-     - Parameters:
-         - lengthInMinutes: The meeting length.
-         - attendees: The name of each attendee.
-     */
+    
     func reset(lengthInMinutes: Int, attendees: [DailyScrum.Attendee]) {
         self.lengthInMinutes = lengthInMinutes
         self.speakers = attendees.speakers
