@@ -2,6 +2,13 @@ import SwiftUI
 
 struct HeartIcon: View {
     
+    let speakers: [ScrumTimer.Speaker]
+    
+    private var currentSpeaker: String {
+        speakers.first(where: { !$0.isCompleted })?.name ?? "Someone"
+        // ??=없어??그러면 기본값처리
+    }
+    
     var body: some View{
         Image(systemName: "heart.fill")
             .font(.system(size: 40))
@@ -21,7 +28,7 @@ struct HeartIcon: View {
                             .fill(Color.red)
                             .frame(width: 35, height: 35)
                             .overlay(
-                                Text("2")
+                                Text(currentSpeaker)
                                     .font(.headline)
                                     .foregroundColor(Color.white)
                             )
@@ -32,7 +39,11 @@ struct HeartIcon: View {
     }
 }
 struct Overlay_Previews: PreviewProvider {
+    static var speakers: [ScrumTimer.Speaker] {
+        [ScrumTimer.Speaker(name: "Bill", isCompleted: true), ScrumTimer.Speaker(name: "Cathy", isCompleted: false)]
+    }
+    
     static var previews: some View {
-        HeartIcon()
+        HeartIcon(speakers: speakers)
     }
 }

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct NewScrumSheet: View {
+    //프리뷰에서 인수로 적을 필요없는 이유= @State이기 때문에 내부에서만 관리
     @State private var newScrum = DailyScrum.emptyScrum
     @Binding var scrums: [DailyScrum]
     @Binding var isPresentingNewScrumView: Bool

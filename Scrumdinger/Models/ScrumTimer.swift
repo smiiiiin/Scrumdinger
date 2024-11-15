@@ -64,9 +64,16 @@ final class ScrumTimer: ObservableObject {
     }
     
     /// Advance the timer to the next speaker.
-    nonisolated func skipSpeaker() {
+    func skipSpeaker() {
         Task { @MainActor in
             changeToSpeaker(at: speakerIndex + 1)
+        }
+    }
+    
+    // 왜 추가 했는데 버튼작동을 안하지? > nonisolated지움
+    func previousSpeaker() {
+        Task { @MainActor in
+            changeToSpeaker(at: speakerIndex - 1)
         }
     }
 
@@ -76,7 +83,7 @@ final class ScrumTimer: ObservableObject {
             speakers[previousSpeakerIndex].isCompleted = true
         }
         secondsElapsedForSpeaker = 0
-        guard index < speakers.count else { return }
+        guard index >= 0 && index < speakers.count else { return }
         speakerIndex = index
         activeSpeaker = speakerText
 
