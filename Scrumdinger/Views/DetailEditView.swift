@@ -9,7 +9,7 @@ struct DetailEditView: View {
             Section(header: Text("Meeting Info")) {
                 TextField("Title", text: $scrum.title)
                 HStack {
-                    Slider(value: $scrum.lengthInMinutesAsDouble, in: 5...30, step: 1) {
+                    Slider(value: $scrum.lengthInMinutesAsDouble, in: 5...30, step: 5) {
                         Text("Length")// voiceOver에서 접근성을 위한 라벨링
                     }
                     .accessibilityValue("\(scrum.lengthInMinutes) minutes")

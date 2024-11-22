@@ -27,9 +27,24 @@ struct MeetingTimerView: View {
                 .accessibilityElement(children: .combine) // 논리적으로 하나로 묶음
                 .foregroundStyle(theme.accentColor)
             }
+        
+            .overlay {
+                ForEach(speakers) { speaker in
+                    if let index = speakers.firstIndex(where: { $0.id == speaker.id }) {
+                        SpeakerArc(speakerIndex: index, totalSpeakers: speakers.count)
+                            .rotation(Angle(degrees: -90))
+                            .stroke(
+                                speaker.isCompleted ? theme.mainColor : Color.gray.opacity(0.3),
+                                lineWidth: 30
+                            )
+                    }
+                }
+            }
+
+        
+        /*
             .overlay  {
                 ForEach(speakers) { speaker in
-                    
                     //if문 괄호 필요없고 and를 , 로 이어준다
                     if speaker.isCompleted, let index = speakers.firstIndex(where: { $0.id == speaker.id }) {
                         // 01. ??? == speaker.id 이거 안쓰면 안되나?
@@ -37,16 +52,8 @@ struct MeetingTimerView: View {
                             .rotation(Angle(degrees: -90))
                             .stroke(theme.mainColor, lineWidth: 30)
                     }
-                    //새로 만든 구문
-                    else if speaker.isCompleted, let index = speakers.firstIndex(where: { $0.id == speaker.id }) {
-                        // 01. ??? == speaker.id 이거 안쓰면 안되나?
-                        SpeakerArc(speakerIndex: index, totalSpeakers: speakers.count)
-                            .rotation(Angle(degrees: 90))
-                            .stroke(theme.mainColor, lineWidth: 30)
-                    }
-                    
                 }
-            }
+            }*/
             .padding(.horizontal) // 양옆 패딩
     }
 }
