@@ -34,26 +34,12 @@ struct MeetingTimerView: View {
                         SpeakerArc(speakerIndex: index, totalSpeakers: speakers.count)
                             .rotation(Angle(degrees: -90))
                             .stroke(
-                                speaker.isCompleted ? theme.mainColor : Color.gray.opacity(0.3),
+                                speaker.isCompleted ? theme.mainColor : Color.gray.opacity(1),
                                 lineWidth: 30
                             )
                     }
                 }
             }
-
-        
-        /*
-            .overlay  {
-                ForEach(speakers) { speaker in
-                    //if문 괄호 필요없고 and를 , 로 이어준다
-                    if speaker.isCompleted, let index = speakers.firstIndex(where: { $0.id == speaker.id }) {
-                        // 01. ??? == speaker.id 이거 안쓰면 안되나?
-                        SpeakerArc(speakerIndex: index, totalSpeakers: speakers.count)
-                            .rotation(Angle(degrees: -90))
-                            .stroke(theme.mainColor, lineWidth: 30)
-                    }
-                }
-            }*/
             .padding(.horizontal) // 양옆 패딩
     }
 }
