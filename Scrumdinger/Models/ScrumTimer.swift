@@ -62,8 +62,11 @@ final class ScrumTimer: ObservableObject {
         timer?.invalidate()
         timerStopped = true
     }
+    
     /// Advance the timer to the next speaker.
     func skipSpeaker() {
+        guard speakerIndex >= 0 && speakerIndex < speakers.count else { return }
+        speakers[speakerIndex].isCompleted = true
         changeToSpeaker(at: speakerIndex + 1)
     }
     
@@ -75,25 +78,20 @@ final class ScrumTimer: ObservableObject {
         changeToSpeaker(at: speakerIndex - 1)
     }
     
+    //changeToSpeaker(at: 2 - 1 =0 ) 3번째(idx2)에서 2(idx1)번째로 돌리기
     
     @MainActor
     private func changeToSpeaker(at index: Int) {
         // Index가 유효한 범위 내에 있는지 확인
         guard index >= 0 && index < speakers.count else { return }
         
-        // 이전 스피커 완료 상태 설정
-        if index > 0 {
-            let previousSpeakerIndex = index - 1
-            speakers[previousSpeakerIndex].isCompleted = true
-        }
-        
         // Index 0일 때 이전 스피커 상태 초기화
         if index == 0 {
             for i in speakers.indices {
                 speakers[i].isCompleted = false
+                print("this is i: \(i) ")
             }
         }
-        
         // 현재 스피커 설정 및 상태 업데이트
         speakerIndex = index
         activeSpeaker = speakerText

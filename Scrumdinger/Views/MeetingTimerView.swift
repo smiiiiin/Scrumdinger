@@ -34,7 +34,7 @@ struct MeetingTimerView: View {
                         SpeakerArc(speakerIndex: index, totalSpeakers: speakers.count)
                             .rotation(Angle(degrees: -90))
                             .stroke(
-                                speaker.isCompleted ? theme.mainColor : Color.gray.opacity(1),
+                                speaker.isCompleted ? theme.mainColor : Color.gray,
                                 lineWidth: 30
                             )
                     }
@@ -54,3 +54,4 @@ struct MeetingTimerView_Previews: PreviewProvider {
         MeetingTimerView(speakers: speakers, isRecording: true, theme: .yellow)
     }
 }
+

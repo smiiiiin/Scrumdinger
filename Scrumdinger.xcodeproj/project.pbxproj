@@ -91,12 +91,12 @@
 			children = (
 				A93E3F4A294D224A00B9708D /* SpeechRecognizer.swift */,
 				C768FBAE294B7F8300798D32 /* ScrumStore.swift */,
-				A93E3F3A294A6F4200B9708D /* ScrumTimer.swift */,
 				AA7F3038294A878E005E1E9F /* AVPlayer+Ding.swift */,
 				A9789BAF2947DF6300305A2F /* DailyScrum.swift */,
 				A9789BAD2947DE5100305A2F /* Theme.swift */,
 				A93E3F40294A912B00B9708D /* History.swift */,
 				A93E3F42294D18F700B9708D /* ErrorWrapper.swift */,
+				A93E3F3A294A6F4200B9708D /* ScrumTimer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
