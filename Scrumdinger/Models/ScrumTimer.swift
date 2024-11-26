@@ -1,30 +1,21 @@
 import Foundation
 
-@MainActor
+@MainActor // 업데이트는 무조건 메인스레드에서 되야되서 메인스레드로 올려준다
 final class ScrumTimer: ObservableObject {
-    /// A struct to keep track of meeting attendees during a meeting.
     struct Speaker: Identifiable {
-        /// The attendee name.
         let name: String
-        /// True if the attendee has completed their turn to speak.
         var isCompleted: Bool
-        /// Id for Identifiable conformance.
         let id = UUID()
     }
     
-    /// The name of the meeting attendee who is speaking.
     @Published var activeSpeaker = ""
-    /// The number of seconds since the beginning of the meeting.
     @Published var secondsElapsed = 0
-    /// The number of seconds until all attendees have had a turn to speak.
     @Published var secondsRemaining = 0
-    /// All meeting attendees, listed in the order they will speak.
-    ///
-    private(set) var speakers: [Speaker] = []
     
-    /// The scrum meeting length.
+    /// All meeting attendees, listed in the order they will speak.
+    private(set) var speakers: [Speaker] = []
     private(set) var lengthInMinutes: Int
-    /// A closure that is executed when a new attendee begins speaking.
+    /// 얘 뭐지? 클로저는 상자같이 일단 마련 그리고 안에 함수로 따로 쓰기 : 유연함을 위해 계속 넣을 수 있어서
     var speakerChangedAction: (() -> Void)?
     
     private weak var timer: Timer?
