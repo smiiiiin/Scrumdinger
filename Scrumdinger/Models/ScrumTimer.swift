@@ -15,16 +15,18 @@ final class ScrumTimer: ObservableObject {
     /// All meeting attendees, listed in the order they will speak.
     private(set) var speakers: [Speaker] = []
     private(set) var lengthInMinutes: Int
-    /// 얘 뭐지? 클로저는 상자같이 일단 마련 그리고 안에 함수로 따로 쓰기 : 유연함을 위해 계속 넣을 수 있어서
+    /// 01. 얘 뭐지? 클로저는 상자같이 일단 마련 그리고 안에 함수로 따로 쓰기 : 유연함을 위해 계속 넣을 수 있어서
     var speakerChangedAction: (() -> Void)?
     
     private weak var timer: Timer?
     private var timerStopped = false
-    private var frequency: TimeInterval { 1.0 / 60.0 }
+    private var frequency: TimeInterval { 1.0 / 60.0 } // int, float같은. TimeInterval 타입형이다
     private var lengthInSeconds: Int { lengthInMinutes * 60 }
     private var secondsPerSpeaker: Int {
         (lengthInMinutes * 60) / speakers.count
     }
+    // 화자마다 말하는 시간
+    // 문제는 버튼과 speakerIndex
     private var secondsElapsedForSpeaker: Int = 0
     private var speakerIndex: Int = 0
     private var speakerText: String {
@@ -53,28 +55,28 @@ final class ScrumTimer: ObservableObject {
         timer?.invalidate()
         timerStopped = true
     }
-    
-    /// Advance the timer to the next speaker.
     func skipSpeaker() {
         guard speakerIndex >= 0 && speakerIndex < speakers.count else { return }
         speakers[speakerIndex].isCompleted = true
         changeToSpeaker(at: speakerIndex + 1)
     }
-    
+
     /// Go back to the previous speaker.
     func previousSpeaker() {
         guard speakerIndex > 0 else { return }
-        // 이전 스피커로 이동!!
+        // 현재 스피커 상태를 미완료로 설정
         speakers[speakerIndex].isCompleted = false
         changeToSpeaker(at: speakerIndex - 1)
     }
-    
-    //changeToSpeaker(at: 2 - 1 =0 ) 3번째(idx2)에서 2(idx1)번째로 돌리기
     
     @MainActor
     private func changeToSpeaker(at index: Int) {
         // Index가 유효한 범위 내에 있는지 확인
         guard index >= 0 && index < speakers.count else { return }
+        
+        speakerIndex = index
+        activeSpeaker = speakerText
+        secondsElapsedForSpeaker = 0
         
         // Index 0일 때 이전 스피커 상태 초기화
         if index == 0 {
@@ -83,10 +85,6 @@ final class ScrumTimer: ObservableObject {
                 print("this is i: \(i) ")
             }
         }
-        // 현재 스피커 설정 및 상태 업데이트
-        speakerIndex = index
-        activeSpeaker = speakerText
-        secondsElapsedForSpeaker = 0
         
         // 타이머 업데이트
         secondsElapsed = index * secondsPerSpeaker
